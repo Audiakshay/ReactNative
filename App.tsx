@@ -81,3 +81,19 @@
 // };
 
 // export default App;
+
+import {View, Text} from 'react-native';
+import React from 'react';
+import UI from './Components/Redux/UI';
+import Store from './Components/Redux/Store';
+import {Provider} from 'react-redux';
+
+const App = () => {
+  return (
+    <Provider store={Store}>
+      <UI />
+    </Provider>
+  );
+};
+
+export default App;

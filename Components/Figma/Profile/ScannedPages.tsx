@@ -13,7 +13,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Style from './Style';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const ScannedPages = () => {
+const ScannedPages = ({navigation}) => {
   const DATA = [
     {
       title: 'A',
@@ -65,7 +65,7 @@ const ScannedPages = () => {
   return (
     <View style={{flex: 1}}>
       <View style={Style.scannedHeader}>
-        <Pressable style={Style.back}>
+        <Pressable style={Style.back} onPress={() => navigation.goBack()}>
           <FontAwesome5 name="arrow-left" size={12} />
         </Pressable>
         <Text style={Style.scanHeader}>Scanned</Text>
@@ -101,7 +101,7 @@ const ScannedPages = () => {
           renderItem={({item}) => (
             <View style={Style.sectionList}>
               <Image source={item.logo} />
-              <View>
+              <View style={{flex: 1, marginLeft: 18}}>
                 <Text style={Style.scanName}>{item.name}</Text>
                 <Text style={Style.scanRole}>{item.role}</Text>
               </View>

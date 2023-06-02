@@ -11,7 +11,10 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationState,
+} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -22,51 +25,15 @@ import WelcomePage from './WelcomePage';
 import SignUp from './SignUp';
 import LoginPage from './LoginPage';
 import ScannedPages from './ScannedPages';
+import Token from '../../token';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Cards from './Cards';
+import EditCard from './EditCard';
+// import MyTabs from './EditCard';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-const Cards = () => {
-  return (
-    <View style={{flex: 1}}>
-      <View style={Style.cardHeader}>
-        <Text>Hey, John</Text>
-        <Image
-          source={require('./Images/userLogin.png')}
-          style={{
-            height: 46,
-            width: 46,
-            backgroundColor: '#F4F6FD',
-            borderRadius: 20,
-          }}
-        />
-      </View>
-      <View style={Style.card}>
-        <Image source={require('./Images/fileRecord.png')} />
-        <Text
-          style={{
-            fontSize: 18,
-            color: '#2242D8',
-            fontWeight: '500',
-            marginTop: 24,
-          }}>
-          Nothing in your card list!
-        </Text>
-        <Text
-          style={{
-            width: 201,
-            height: 32,
-            color: '#869BFF',
-            fontSize: 12,
-            fontWeight: '500',
-            marginTop: 8,
-            textAlign: 'center',
-          }}>
-          No worried make your first digital business card now{' '}
-        </Text>
-      </View>
-    </View>
-  );
-};
+
 const CamPage = () => {
   return <CameraVision />;
 };
@@ -311,7 +278,11 @@ const Settings = ({navigation}) => {
           )}
         />
         <View style={Style.LogoutBtn}>
-          <Pressable onPress={() => setLoading(true)}>
+          <Pressable
+            onPress={() => {
+              setLoading(true);
+              AsyncStorage.clear();
+            }}>
             <Text style={Style.logout}>Logout?</Text>
           </Pressable>
         </View>
@@ -379,10 +350,8 @@ const Profile = () => {
   return (
     // <NavigationContainer>
     <Tab.Navigator
-      // tabBarOptions={{
-      //   keyboardHidesTabBar: true,
-      // }}
       screenOptions={({route}) => ({
+        tabBarHideOnKeyboard: true,
         tabBarIcon: ({focused, size, color}) => {
           let iconName;
           if (route.name === 'Cards') {
@@ -444,31 +413,36 @@ const ScreenNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Bottom"
-          component={Profile}
-          options={{header: () => null}}
-        />
-        <Stack.Screen name="Scan Id" component={CamPage} />
-        <Stack.Screen
           name="Welcome"
           component={WelcomePage}
           options={{header: () => null}}
         />
         <Stack.Screen
+          name="Bottom"
+          component={Profile}
+          options={{header: () => null}}
+        />
+        <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{title: null}}
+          options={{title: null, header: () => null}}
         />
         <Stack.Screen
           name="Login"
           component={LoginPage}
-          options={{title: null}}
+          options={{title: null, header: () => null}}
         />
         <Stack.Screen
           name="ScanedContacts"
           component={ScannedPages}
           options={{header: () => null}}
         />
+        <Stack.Screen
+          name="Edit"
+          component={EditCard}
+          options={{header: () => null}}
+        />
+        <Stack.Screen name="Scan Id" component={CamPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

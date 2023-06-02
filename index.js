@@ -8,11 +8,12 @@ import {name as appName} from './app.json';
 // import TodoApp from './Components/Todo/TodoApp';
 // import App from './Components/App';
 // import AppTest from './Components/Shop';
-import Profile from './Components/Figma/Profile/Profile';
+import ScreenNavigation from './Components/Figma/Profile/Profile';
+import App from './App';
 // import CameraVision from './Components/CameraVision/CameraVision';
 // import OpenGallery from './Components/openGallery/OpenGallery';
 // import ModalBox from './Components/ModalBox/ModalBox';
 // import Login from './Components/AsyncStorage/Login';
 // import AsyncStackNav from './Components/AsyncStorage/AsyncStackNav';
 
-AppRegistry.registerComponent(appName, () => Profile);
+AppRegistry.registerComponent(appName, () => ScreenNavigation);
